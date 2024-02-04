@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     db_init()
 
-    earnings_list = get_earning_calender('2024-01-26', '2024-02-10', API_KEY)
+    earnings_list = get_earning_calender('2023-11-10', '2024-02-10', API_KEY)
 
     for company in earnings_list:
         if (not '.' in company['symbol']) and company['date']:
@@ -61,7 +61,7 @@ if __name__ == "__main__":
             if marketcap_data and marketcap_data[0]['marketCap'] > billion:
                 company['date'] = datetime.strptime(company['date'], "%Y-%m-%d")
                 company_chart_list = get_historical_chart((company['date'] + timedelta(days=-7)).strftime("%Y-%m-%d"),
-                                                          company['date'].strftime("%Y-%m-%d"),
+                                                          (company['date']+ timedelta(days=-1)).strftime("%Y-%m-%d"),
                                                           company['symbol'], API_KEY)
                 price_gain_doc = get_prepared_price_data(company_chart_list)
                 resultList.append(company | {'marketCap': marketcap_data[0]['marketCap']} | price_gain_doc)
