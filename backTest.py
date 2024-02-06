@@ -11,7 +11,7 @@ def db_init():
     global earnings_collection
     client = pym.MongoClient("mongodb://localhost:27017")
     db = client.local
-    earnings_collection = db["earningsTest"]
+    earnings_collection = db["earningsTest14"]
 
 
 def get_earning_calender(start, end, apikey):
