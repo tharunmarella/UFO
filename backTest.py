@@ -3,6 +3,8 @@ from datetime import datetime, timedelta
 import requests
 import pymongo as pym
 
+import Russells_1000
+
 API_KEY = 'crdM7JgRp4dTR20Cva5iNakMhXs9zQCy'
 billion = 100000000
 
@@ -11,7 +13,7 @@ def db_init():
     global earnings_collection
     client = pym.MongoClient("mongodb://localhost:27017")
     db = client.local
-    earnings_collection = db["earningsTest14"]
+    earnings_collection = db["earningsTest15"]
 
 
 def get_earning_calender(start, end, apikey):
@@ -69,8 +71,15 @@ if __name__ == "__main__":
     db_init()
 
     earnings_list = get_earning_calender('2023-11-10', '2024-02-10', API_KEY)
+    russell_tickers = Russells_1000.top_1000_from_csv()
 
-    for company in earnings_list:
+    filtered_earnings_list = []
+
+    for obj in earnings_list:
+        if russell_tickers.__contains__(obj["symbol"]):
+            filtered_earnings_list.append(obj)
+
+    for company in filtered_earnings_list:
         if (not '.' in company['symbol']) and company['date']:
             marketcap_data = get_market_cap(API_KEY, company['symbol'])
             if marketcap_data and marketcap_data[0]['marketCap'] > billion:
