@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-
+import time
 import requests
 import pymongo as pym
 
@@ -18,18 +18,24 @@ def db_init():
 
 def get_earning_calender(start, end, apikey):
     earnings_url = 'https://financialmodelingprep.com/api/v3/earning_calendar?from=' + start + '&to=' + end + '&apikey=' + apikey
+    # Financial Model Prep supports 750 calls per min at current subscription
+    time.sleep(1/500)
     result = requests.get(earnings_url).json()
     return result
 
 
 def get_market_cap(apikey, symbol):
     marketCap_url = 'https://financialmodelingprep.com/api/v3/market-capitalization/' + symbol + '?apikey=' + apikey
+    # Financial Model Prep supports 750 calls per min at current subscription
+    time.sleep(1/500)
     result = requests.get(marketCap_url).json()
     return result
 
 
 def get_historical_chart(start, end, company_symbol, apikey):
     marketCap_url = 'https://financialmodelingprep.com/api/v3/historical-chart/1hour/' + company_symbol + '?from=' + start + '&to=' + end + '&apikey=' + apikey
+    # Financial Model Prep supports 750 calls per min at current subscription
+    time.sleep(1/500)
     result = requests.get(marketCap_url).json()
     return result
 
@@ -51,6 +57,8 @@ def get_prepared_price_data(chart_list):
 
 def get_company_profile(company_symbol, apikey):
     company_profile_url = 'https://financialmodelingprep.com/api/v3/profile/' + company_symbol + '?apikey=' + apikey
+    # Financial Model Prep supports 750 calls per min at current subscription
+    time.sleep(1/500)
     result = requests.get(company_profile_url).json()
     return result
 
