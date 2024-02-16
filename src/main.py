@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-import pymongo as pym
 
 from src.apis.avg_price_target_api import get_avg_price_target
 from src.apis.company_profile_api import get_company_profile
@@ -9,17 +8,11 @@ from src.apis.historical_chart_api import get_historical_chart
 from src.apis.market_cap_api import get_market_cap
 from src.apis.news_sentiment_api import get_news_sentiment
 from src.utils.prepared_price_data_util import get_prepared_price_data
+from src.utils.db_util import db_init
+from src.utils.db_util import insert_many
 
 API_KEY = 'crdM7JgRp4dTR20Cva5iNakMhXs9zQCy'
 billion = 100000000
-
-
-def db_init():
-    global earnings_collection
-    client = pym.MongoClient("mongodb://localhost:27017")
-    db = client.local
-    earnings_collection = db["earningsTest"]
-
 
 if __name__ == "__main__":
 
@@ -56,5 +49,4 @@ if __name__ == "__main__":
                     company | company_profile_doc | marketcap_doc | price_gain_doc | price_target_doc | news_sentiment_doc)
 
                 print(resultList)
-
-    earnings_collection.insert_many(resultList)
+    insert_many(resultList)
