@@ -1,8 +1,5 @@
 from datetime import datetime, timedelta
-from dateutil.parser import parse
-import requests
 import pymongo as pym
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from src.apis.avg_price_target_api import get_avg_price_target
 from src.apis.company_profile_api import get_company_profile
@@ -11,7 +8,7 @@ from src.apis.filtered_company_profile_api import get_filtered_company_profile_d
 from src.apis.historical_chart_api import get_historical_chart
 from src.apis.market_cap_api import get_market_cap
 from src.apis.news_sentiment_api import get_news_sentiment
-from src.apis.prepared_price_data_util import get_prepared_price_data
+from src.utils.prepared_price_data_util import get_prepared_price_data
 
 API_KEY = 'crdM7JgRp4dTR20Cva5iNakMhXs9zQCy'
 billion = 100000000
